@@ -411,32 +411,28 @@
     </div>
 
     <script>
-        // Set minimum date for expiry date to current month
         const today = new Date();
         const year = today.getFullYear();
         let month = today.getMonth() + 1;
         if (month < 10) month = '0' + month;
         document.getElementById('expiryDate').min = `${year}-${month}`;
 
-        // Toggle promo code section
         document.querySelector('.promo-toggle').addEventListener('click', function() {
             const promoContent = document.querySelector('.promo-content');
             const toggleIcon = document.querySelector('.promo-toggle-icon');
             
-            if (promoContent.style.display === 'block') {
-                promoContent.style.display = 'none';
-                toggleIcon.textContent = '▼';
+            if (promoContent.style.display==='block') {
+                promoContent.style.display='none';
+                toggleIcon.textContent='▼';
             } else {
                 promoContent.style.display = 'block';
                 toggleIcon.textContent = '▲';
             }
         });
 
-        // Form validation
         const form = document.getElementById('checkoutForm');
         const buyNowBtn = document.getElementById('buyNowBtn');
         
-        // Input fields
         const fullName = document.getElementById('fullName');
         const email = document.getElementById('email');
         const phone = document.getElementById('phone');
@@ -448,7 +444,6 @@
         const expiryDate = document.getElementById('expiryDate');
         const cvv = document.getElementById('cvv');
         
-        // Error messages
         const fullNameError = document.getElementById('fullNameError');
         const emailError = document.getElementById('emailError');
         const phoneError = document.getElementById('phoneError');
@@ -460,7 +455,6 @@
         const expiryDateError = document.getElementById('expiryDateError');
         const cvvError = document.getElementById('cvvError');
         
-        // Validation functions
         function validateName() {
             const nameRegex = /^[A-Za-z\s]+$/;
             if (!fullName.value.trim()) {
@@ -596,7 +590,6 @@
             const selectedDate = new Date(expiryDate.value);
             const currentDate = new Date();
             
-            // Set both dates to the 1st of their respective months to compare
             selectedDate.setDate(1);
             currentDate.setDate(1);
             
@@ -631,7 +624,7 @@
             }
         }
         
-        // Add event listeners for real-time validation
+      
         fullName.addEventListener('blur', validateName);
         email.addEventListener('blur', validateEmail);
         phone.addEventListener('blur', validatePhone);
@@ -643,11 +636,10 @@
         expiryDate.addEventListener('blur', validateExpiryDate);
         cvv.addEventListener('blur', validateCVV);
         
-        // Handle form submission
+        
         buyNowBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // Validate all fields
+        
             const isNameValid = validateName();
             const isEmailValid = validateEmail();
             const isPhoneValid = validatePhone();
@@ -659,29 +651,28 @@
             const isExpiryDateValid = validateExpiryDate();
             const isCVVValid = validateCVV();
             
-            // If all validations pass
+            
             if (isNameValid && isEmailValid && isPhoneValid && isAddressValid && 
                 isCityValid && isPostcodeValid && isCountryValid && 
                 isCardNumberValid && isExpiryDateValid && isCVVValid) {
                 
-                // Show success message
                 document.getElementById('successMessage').style.display = 'block';
                 
-                // Reset form
+                
                 document.getElementById('checkoutForm').reset();
                 cardNumber.value = '';
                 expiryDate.value = '';
                 cvv.value = '';
                 
-                // Scroll to top to see success message
+                
                 window.scrollTo(0, 0);
                 
-                // Hide success message after 5 seconds
+                
                 setTimeout(function() {
                     document.getElementById('successMessage').style.display = 'none';
                 }, 5000);
             } else {
-                // Focus on the first invalid field
+                
                 if (!isNameValid) fullName.focus();
                 else if (!isEmailValid) email.focus();
                 else if (!isPhoneValid) phone.focus();
@@ -695,12 +686,12 @@
             }
         });
 
-        // Format card number with spaces for better readability
+        
         cardNumber.addEventListener('input', function(e) {
-            // Remove all non-digit characters
+           
             let value = this.value.replace(/\D/g, '');
             
-            // Limit to 16 digits
+            
             if (value.length > 16) {
                 value = value.slice(0, 16);
             }
@@ -708,12 +699,10 @@
             this.value = value;
         });
 
-        // Allow only numbers in CVV field
+       
         cvv.addEventListener('input', function(e) {
-            // Remove all non-digit characters
             let value = this.value.replace(/\D/g, '');
             
-            // Limit to 3 digits
             if (value.length > 3) {
                 value = value.slice(0, 3);
             }
@@ -721,12 +710,9 @@
             this.value = value;
         });
 
-        // Allow only numbers in phone field
         phone.addEventListener('input', function(e) {
-            // Remove all non-digit characters
             let value = this.value.replace(/\D/g, '');
             
-            // Limit to 15 digits
             if (value.length > 15) {
                 value = value.slice(0, 15);
             }
