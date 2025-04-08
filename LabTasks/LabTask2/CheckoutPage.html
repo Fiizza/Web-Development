@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASOS Checkout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .checkout-title {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .secure-badge img {
+            height: 30px;
+        }
+        
+        .checkout-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        
+        .checkout-form {
+            flex: 2;
+        }
+        
+        .order-summary {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .form-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #2d2d2d;
+        }
+        
+        .form-input.error {
+            border-color: #e74c3c;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .card-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .card-inputs .form-input {
+            flex: 1;
+        }
+        
+        .cvv-input {
+            max-width: 100px;
+        }
+        
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #a3e0c9;
+            color: #333;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-transform: uppercase;
+            margin: 20px 0;
+        }
+        
+        .button:hover {
+            background-color: #8ad0b9;
+        }
+        
+        .product-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-image {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .product-details h4 {
+            margin-bottom: 5px;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-variant, .product-qty {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .terms-text {
+            font-size: 12px;
+            color: #666;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+        
+        .terms-text a {
+            color: #666;
+            text-decoration: underline;
+        }
+
+        .promo-toggle {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo-content {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .promo-toggle-icon {
+            font-size: 20px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .delivery-radio {
+            margin-right: 10px;
+        }
+
+        .optional-label {
+            color: #999;
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ASOS</div>
+            <div class="checkout-title">CHECKOUT</div>
+            <div class="secure-badge">
+                <img src="https://seal.digicert.com/seals/cascade/?tag=mrb4t…referer=secure.asos.com&format=png&lang=en&an=min" alt="Digicert Secured">
+            </div>
+        </header>
+        
+        <div class="success-message" id="successMessage">
+            Order placed successfully! Thank you for your purchase.
+        </div>
+        
+        <div class="checkout-content">
+            <div class="checkout-form">
+                <div class="form-section">
+                    <div class="promo-toggle">
+                        <div class="section-title">PROMO/STUDENT CODE OR VOUCHERS</div>
+                        <span class="promo-toggle-icon">▼</span>
+                    </div>
+                    <div class="promo-content">
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="Enter promo code">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title">DELIVERY ADDRESS</div>
+                    <form id="checkoutForm">
+                        <div class="form-row">
+                            <label class="form-label">FULL NAME*</label>
+                            <input type="text" class="form-input" id="fullName" required pattern="[A-Za-z\s]+" title="Only alphabets allowed">
+                            <span class="error-message" id="fullNameError">Please enter a valid name (only alphabets allowed)</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">EMAIL ADDRESS*</label>
+                            <input type="email" class="form-input" id="email" required>
+                            <span class="error-message" id="emailError">Please enter a valid email address</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">PHONE NUMBER*</label>
+                            <input type="tel" class="form-input" id="phone" required pattern="[0-9]{10,15}" minlength="10" maxlength="15">
+                            <span class="error-message" id="phoneError">Please enter a valid phone number (10-15 digits only)</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">ADDRESS LINE 1*</label>
+                            <input type="text" class="form-input" id="address1" required>
+                            <span class="error-message" id="address1Error">Address is required</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">ADDRESS LINE 2</label>
+                            <input type="text" class="form-input" id="address2">
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">CITY*</label>
+                            <input type="text" class="form-input" id="city" required>
+                            <span class="error-message" id="cityError">City is required</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">COUNTY/STATE <span class="optional-label">(Optional)</span></label>
+                            <input type="text" class="form-input" id="county">
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">POSTCODE/ZIP*</label>
+                            <input type="text" class="form-input" id="postcode" required>
+                            <span class="error-message" id="postcodeError">Postcode/ZIP is required</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">COUNTRY*</label>
+                            <input type="text" class="form-input" id="country" required value="Pakistan">
+                            <span class="error-message" id="countryError">Country is required</span>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title">PAYMENT DETAILS</div>
+                    <div class="form-row">
+                        <label class="form-label">CREDIT CARD NUMBER*</label>
+                        <input type="text" class="form-input" id="cardNumber" required pattern="[0-9]{16}" maxlength="16">
+                        <span class="error-message" id="cardNumberError">Please enter a valid 16-digit card number</span>
+                    </div>
+                    
+                    <div class="card-inputs">
+                        <div class="form-row">
+                            <label class="form-label">EXPIRY DATE*</label>
+                            <input type="month" class="form-input" id="expiryDate" required min="">
+                            <span class="error-message" id="expiryDateError">Please enter a valid future date</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">CVV*</label>
+                            <input type="text" class="form-input cvv-input" id="cvv" required pattern="[0-9]{3}" maxlength="3">
+                            <span class="error-message" id="cvvError">Please enter a valid 3-digit CVV</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title">DELIVERY OPTIONS</div>
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" class="delivery-radio" id="standardDelivery" checked>
+                        <label for="standardDelivery">Standard Delivery (3-5 business days)</label>
+                    </div>
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" class="delivery-radio" id="expressDelivery">
+                        <label for="expressDelivery">Express Delivery (1-2 business days)</label>
+                    </div>
+                </div>
+                
+                <button class="button" id="buyNowBtn">BUY NOW</button>
+                
+                <div class="terms-text">
+                    By placing your order you agree to our <a href="#">Terms & Conditions</a>, <a href="#">privacy</a> and <a href="#">returns policies</a>. You also consent to some of your data being stored by ASOS, which may be used to make future shopping experiences better for you.
+                </div>
+            </div>
+            
+            <div class="order-summary">
+                <div class="section-title">1 ITEM <a href="#" style="float:right; font-size:14px; font-weight:normal;">Edit</a></div>
+                
+                <div class="product-item">
+                    <img src="https://images.asos-media.com/products/jack-jones-ron-skater-jean-in-washed-grey/206549668-1-washedgrey?$l$" alt="Product Image" class="product-image">
+                    <div class="product-details">
+                        <div class="product-price">$28.42</div>
+                        <h4>Jack & Jones Ron skater jean in washed grey</h4>
+                        <div class="product-variant">Washed Grey W32 L34</div>
+                        <div class="product-qty">Qty: 1</div>
+                    </div>
+                </div>
+                
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>$28.42</span>
+                </div>
+                
+                <div class="total-row" style="margin-top:20px;">
+                    <span class="total-price">TOTAL TO PAY</span>
+                    <span class="total-price">$28.42</span>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div>ASOS Help</div>
+        </footer>
+    </div>
+
+    <script>
+        // Set minimum date for expiry date to current month
+        const today = new Date();
+        const year = today.getFullYear();
+        let month = today.getMonth() + 1;
+        if (month < 10) month = '0' + month;
+        document.getElementById('expiryDate').min = `${year}-${month}`;
+
+        // Toggle promo code section
+        document.querySelector('.promo-toggle').addEventListener('click', function() {
+            const promoContent = document.querySelector('.promo-content');
+            const toggleIcon = document.querySelector('.promo-toggle-icon');
+            
+            if (promoContent.style.display === 'block') {
+                promoContent.style.display = 'none';
+                toggleIcon.textContent = '▼';
+            } else {
+                promoContent.style.display = 'block';
+                toggleIcon.textContent = '▲';
+            }
+        });
+
+        // Form validation
+        const form = document.getElementById('checkoutForm');
+        const buyNowBtn = document.getElementById('buyNowBtn');
+        
+        // Input fields
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const address1 = document.getElementById('address1');
+        const city = document.getElementById('city');
+        const postcode = document.getElementById('postcode');
+        const country = document.getElementById('country');
+        const cardNumber = document.getElementById('cardNumber');
+        const expiryDate = document.getElementById('expiryDate');
+        const cvv = document.getElementById('cvv');
+        
+        // Error messages
+        const fullNameError = document.getElementById('fullNameError');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+        const address1Error = document.getElementById('address1Error');
+        const cityError = document.getElementById('cityError');
+        const postcodeError = document.getElementById('postcodeError');
+        const countryError = document.getElementById('countryError');
+        const cardNumberError = document.getElementById('cardNumberError');
+        const expiryDateError = document.getElementById('expiryDateError');
+        const cvvError = document.getElementById('cvvError');
+        
+        // Validation functions
+        function validateName() {
+            const nameRegex = /^[A-Za-z\s]+$/;
+            if (!fullName.value.trim()) {
+                fullName.classList.add('error');
+                fullNameError.style.display = 'block';
+                fullNameError.textContent = 'Name is required';
+                return false;
+            } else if (!nameRegex.test(fullName.value)) {
+                fullName.classList.add('error');
+                fullNameError.style.display = 'block';
+                fullNameError.textContent = 'Only alphabets allowed';
+                return false;
+            } else {
+                fullName.classList.remove('error');
+                fullNameError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim()) {
+                email.classList.add('error');
+                emailError.style.display = 'block';
+                emailError.textContent = 'Email is required';
+                return false;
+            } else if (!emailRegex.test(email.value)) {
+                email.classList.add('error');
+                emailError.style.display = 'block';
+                emailError.textContent = 'Please enter a valid email address';
+                return false;
+            } else {
+                email.classList.remove('error');
+                emailError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validatePhone() {
+            const phoneRegex = /^[0-9]{10,15}$/;
+            if (!phone.value.trim()) {
+                phone.classList.add('error');
+                phoneError.style.display = 'block';
+                phoneError.textContent = 'Phone number is required';
+                return false;
+            } else if (!phoneRegex.test(phone.value)) {
+                phone.classList.add('error');
+                phoneError.style.display = 'block';
+                phoneError.textContent = 'Please enter a valid phone number (10-15 digits only)';
+                return false;
+            } else {
+                phone.classList.remove('error');
+                phoneError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateAddress() {
+            if (!address1.value.trim()) {
+                address1.classList.add('error');
+                address1Error.style.display = 'block';
+                return false;
+            } else {
+                address1.classList.remove('error');
+                address1Error.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateCity() {
+            if (!city.value.trim()) {
+                city.classList.add('error');
+                cityError.style.display = 'block';
+                return false;
+            } else {
+                city.classList.remove('error');
+                cityError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validatePostcode() {
+            if (!postcode.value.trim()) {
+                postcode.classList.add('error');
+                postcodeError.style.display = 'block';
+                return false;
+            } else {
+                postcode.classList.remove('error');
+                postcodeError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateCountry() {
+            if (!country.value.trim()) {
+                country.classList.add('error');
+                countryError.style.display = 'block';
+                return false;
+            } else {
+                country.classList.remove('error');
+                countryError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateCardNumber() {
+            const cardRegex = /^[0-9]{16}$/;
+            if (!cardNumber.value.trim()) {
+                cardNumber.classList.add('error');
+                cardNumberError.style.display = 'block';
+                cardNumberError.textContent = 'Card number is required';
+                return false;
+            } else if (!cardRegex.test(cardNumber.value)) {
+                cardNumber.classList.add('error');
+                cardNumberError.style.display = 'block';
+                cardNumberError.textContent = 'Please enter a valid 16-digit card number';
+                return false;
+            } else {
+                cardNumber.classList.remove('error');
+                cardNumberError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateExpiryDate() {
+            if (!expiryDate.value) {
+                expiryDate.classList.add('error');
+                expiryDateError.style.display = 'block';
+                expiryDateError.textContent = 'Expiry date is required';
+                return false;
+            }
+            
+            const selectedDate = new Date(expiryDate.value);
+            const currentDate = new Date();
+            
+            // Set both dates to the 1st of their respective months to compare
+            selectedDate.setDate(1);
+            currentDate.setDate(1);
+            
+            if (selectedDate < currentDate) {
+                expiryDate.classList.add('error');
+                expiryDateError.style.display = 'block';
+                expiryDateError.textContent = 'Expiry date must be in the future';
+                return false;
+            } else {
+                expiryDate.classList.remove('error');
+                expiryDateError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        function validateCVV() {
+            const cvvRegex = /^[0-9]{3}$/;
+            if (!cvv.value.trim()) {
+                cvv.classList.add('error');
+                cvvError.style.display = 'block';
+                cvvError.textContent = 'CVV is required';
+                return false;
+            } else if (!cvvRegex.test(cvv.value)) {
+                cvv.classList.add('error');
+                cvvError.style.display = 'block';
+                cvvError.textContent = 'Please enter a valid 3-digit CVV';
+                return false;
+            } else {
+                cvv.classList.remove('error');
+                cvvError.style.display = 'none';
+                return true;
+            }
+        }
+        
+        // Add event listeners for real-time validation
+        fullName.addEventListener('blur', validateName);
+        email.addEventListener('blur', validateEmail);
+        phone.addEventListener('blur', validatePhone);
+        address1.addEventListener('blur', validateAddress);
+        city.addEventListener('blur', validateCity);
+        postcode.addEventListener('blur', validatePostcode);
+        country.addEventListener('blur', validateCountry);
+        cardNumber.addEventListener('blur', validateCardNumber);
+        expiryDate.addEventListener('blur', validateExpiryDate);
+        cvv.addEventListener('blur', validateCVV);
+        
+        // Handle form submission
+        buyNowBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Validate all fields
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isPhoneValid = validatePhone();
+            const isAddressValid = validateAddress();
+            const isCityValid = validateCity();
+            const isPostcodeValid = validatePostcode();
+            const isCountryValid = validateCountry();
+            const isCardNumberValid = validateCardNumber();
+            const isExpiryDateValid = validateExpiryDate();
+            const isCVVValid = validateCVV();
+            
+            // If all validations pass
+            if (isNameValid && isEmailValid && isPhoneValid && isAddressValid && 
+                isCityValid && isPostcodeValid && isCountryValid && 
+                isCardNumberValid && isExpiryDateValid && isCVVValid) {
+                
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('checkoutForm').reset();
+                cardNumber.value = '';
+                expiryDate.value = '';
+                cvv.value = '';
+                
+                // Scroll to top to see success message
+                window.scrollTo(0, 0);
+                
+                // Hide success message after 5 seconds
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            } else {
+                // Focus on the first invalid field
+                if (!isNameValid) fullName.focus();
+                else if (!isEmailValid) email.focus();
+                else if (!isPhoneValid) phone.focus();
+                else if (!isAddressValid) address1.focus();
+                else if (!isCityValid) city.focus();
+                else if (!isPostcodeValid) postcode.focus();
+                else if (!isCountryValid) country.focus();
+                else if (!isCardNumberValid) cardNumber.focus();
+                else if (!isExpiryDateValid) expiryDate.focus();
+                else if (!isCVVValid) cvv.focus();
+            }
+        });
+
+        // Format card number with spaces for better readability
+        cardNumber.addEventListener('input', function(e) {
+            // Remove all non-digit characters
+            let value = this.value.replace(/\D/g, '');
+            
+            // Limit to 16 digits
+            if (value.length > 16) {
+                value = value.slice(0, 16);
+            }
+            
+            this.value = value;
+        });
+
+        // Allow only numbers in CVV field
+        cvv.addEventListener('input', function(e) {
+            // Remove all non-digit characters
+            let value = this.value.replace(/\D/g, '');
+            
+            // Limit to 3 digits
+            if (value.length > 3) {
+                value = value.slice(0, 3);
+            }
+            
+            this.value = value;
+        });
+
+        // Allow only numbers in phone field
+        phone.addEventListener('input', function(e) {
+            // Remove all non-digit characters
+            let value = this.value.replace(/\D/g, '');
+            
+            // Limit to 15 digits
+            if (value.length > 15) {
+                value = value.slice(0, 15);
+            }
+            
+            this.value = value;
+        });
+    </script>
+</body>
+</html>
