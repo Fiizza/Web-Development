@@ -430,9 +430,17 @@
             }
         });
 
+<<<<<<< HEAD
         const form = document.getElementById('checkoutForm');
         const buyNowBtn = document.getElementById('buyNowBtn');
         
+=======
+        
+        const form = document.getElementById('checkoutForm');
+        const buyNowBtn = document.getElementById('buyNowBtn');
+        
+       
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
         const fullName = document.getElementById('fullName');
         const email = document.getElementById('email');
         const phone = document.getElementById('phone');
@@ -444,6 +452,10 @@
         const expiryDate = document.getElementById('expiryDate');
         const cvv = document.getElementById('cvv');
         
+<<<<<<< HEAD
+=======
+        
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
         const fullNameError = document.getElementById('fullNameError');
         const emailError = document.getElementById('emailError');
         const phoneError = document.getElementById('phoneError');
@@ -455,6 +467,10 @@
         const expiryDateError = document.getElementById('expiryDateError');
         const cvvError = document.getElementById('cvvError');
         
+<<<<<<< HEAD
+=======
+
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
         function validateName() {
             const nameRegex = /^[A-Za-z\s]+$/;
             if (!fullName.value.trim()) {
@@ -590,6 +606,10 @@
             const selectedDate = new Date(expiryDate.value);
             const currentDate = new Date();
             
+<<<<<<< HEAD
+=======
+           
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
             selectedDate.setDate(1);
             currentDate.setDate(1);
             
@@ -636,10 +656,18 @@
         expiryDate.addEventListener('blur', validateExpiryDate);
         cvv.addEventListener('blur', validateCVV);
         
+<<<<<<< HEAD
         
         buyNowBtn.addEventListener('click', function(e) {
             e.preventDefault();
         
+=======
+       
+        buyNowBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+         
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
             const isNameValid = validateName();
             const isEmailValid = validateEmail();
             const isPhoneValid = validatePhone();
@@ -651,23 +679,38 @@
             const isExpiryDateValid = validateExpiryDate();
             const isCVVValid = validateCVV();
             
+<<<<<<< HEAD
             
+=======
+          
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
             if (isNameValid && isEmailValid && isPhoneValid && isAddressValid && 
                 isCityValid && isPostcodeValid && isCountryValid && 
                 isCardNumberValid && isExpiryDateValid && isCVVValid) {
                 
                 document.getElementById('successMessage').style.display = 'block';
                 
+<<<<<<< HEAD
                 
+=======
+         
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
                 document.getElementById('checkoutForm').reset();
                 cardNumber.value = '';
                 expiryDate.value = '';
                 cvv.value = '';
                 
+<<<<<<< HEAD
                 
                 window.scrollTo(0, 0);
                 
                 
+=======
+             
+                window.scrollTo(0, 0);
+                
+
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
                 setTimeout(function() {
                     document.getElementById('successMessage').style.display = 'none';
                 }, 5000);
@@ -686,12 +729,20 @@
             }
         });
 
+<<<<<<< HEAD
         
+=======
+       
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
         cardNumber.addEventListener('input', function(e) {
            
             let value = this.value.replace(/\D/g, '');
             
+<<<<<<< HEAD
             
+=======
+          
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
             if (value.length > 16) {
                 value = value.slice(0, 16);
             }
@@ -699,10 +750,19 @@
             this.value = value;
         });
 
+<<<<<<< HEAD
        
         cvv.addEventListener('input', function(e) {
             let value = this.value.replace(/\D/g, '');
             
+=======
+      
+        cvv.addEventListener('input', function(e) {
+           
+            let value = this.value.replace(/\D/g, '');
+            
+           
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
             if (value.length > 3) {
                 value = value.slice(0, 3);
             }
@@ -713,6 +773,10 @@
         phone.addEventListener('input', function(e) {
             let value = this.value.replace(/\D/g, '');
             
+<<<<<<< HEAD
+=======
+           
+>>>>>>> e36b54ffcaf6f051011b79426651ecdcbfd70c2d
             if (value.length > 15) {
                 value = value.slice(0, 15);
             }
