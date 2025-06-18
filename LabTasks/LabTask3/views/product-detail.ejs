@@ -1,0 +1,128 @@
+<div style="padding: 40px 0; background: #fafafa; min-height: 80vh;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        
+        <!-- Product Detail -->
+        <div style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 60px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0;">
+                
+                <!-- Product Image -->
+                <div style="position: relative; height: 500px; overflow: hidden;">
+                    <img src="<%= encodeURI(product.image) %>" 
+                         alt="<%= product.name %>" 
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                    
+                    <% if (!product.inStock) { %>
+                        <div style="position: absolute; top: 20px; left: 20px; background: #e74c3c; color: white; padding: 8px 16px; border-radius: 25px; font-size: 14px; font-weight: bold;">
+                            OUT OF STOCK
+                        </div>
+                    <% } %>
+                </div>
+                
+                <!-- Product Info -->
+                <div style="padding: 40px;">
+                    <h1 style="font-size: 32px; font-weight: bold; color: #333; margin-bottom: 15px; font-family: sans-serif;">
+                        <%= product.name %>
+                    </h1>
+                    
+                    <p style="color: #666; font-size: 18px; line-height: 1.6; margin-bottom: 25px;">
+                        <%= product.description %>
+                    </p>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <span style="font-size: 36px; font-weight: bold; color: #e74c3c;">
+                            $<%= product.price %>
+                        </span>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <span style="display: inline-block; background: #f8f8f8; color: #333; padding: 8px 16px; border-radius: 20px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                            <%= product.category.replace('-', ' ') %>
+                        </span>
+                    </div>
+                    
+                    <% if (product.inStock) { %>
+                        <button style="width: 100%; background: #333; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; transition: background 0.3s ease; margin-bottom: 15px;">
+                            Add to Cart - $<%= product.price %>
+                        </button>
+                        <button style="width: 100%; background: transparent; color: #333; border: 2px solid #333; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            Add to Wishlist
+                        </button>
+                    <% } else { %>
+                        <button disabled style="width: 100%; background: #ccc; color: #888; border: none; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: not-allowed; margin-bottom: 15px;">
+                            Out of Stock
+                        </button>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Products -->
+        <% if (relatedProducts.length > 0) { %>
+            <div style="margin-bottom: 40px;">
+                <h2 style="font-size: 28px; font-weight: bold; color: #333; margin-bottom: 30px; text-align: center; font-family: sans-serif;">
+                    Related Products
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+                    <% relatedProducts.forEach(relatedProduct => { %>
+                        <div class="product-card" style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+                             onclick="window.location.href='/products/<%= relatedProduct.id %>'">
+                            
+                            <div style="position: relative; overflow: hidden; height: 200px;">
+                                <img src="<%= encodeURI(relatedProduct.image) %>" 
+                                     alt="<%= relatedProduct.name %>" 
+                                     style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            </div>
+                            
+                            <div style="padding: 15px;">
+                                <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: sans-serif;">
+                                    <%= relatedProduct.name %>
+                                </h3>
+                                <span style="font-size: 18px; font-weight: bold; color: #e74c3c;">
+                                    $<%= relatedProduct.price %>
+                                </span>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            </div>
+        <% } %>
+        
+        <!-- Back to Products -->
+        <div style="text-align: center;">
+            <a href="/products" style="display: inline-block; background: #f8f8f8; color: #333; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-size: 16px; transition: background 0.3s ease;">
+                ← Back to Products
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+button:not(:disabled):hover {
+    background: #525050 !important;
+}
+
+button[style*="transparent"]:hover {
+    background: #333 !important;
+    color: white !important;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+a:hover {
+    background: #e8e8e8 !important;
+}
+
+@media (max-width: 768px) {
+    .product-detail-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="icon" href="https://content.asos-media.com/-/media/images/asos/logo/icon_svg.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main>
+        <%- body %>
+    </main>
+    
+    <%- include('partials/footer') %>
+    
+    <script>
+        function toggleUserMenu() {
+            const menu = document.querySelector('.user-dropdown');
+            if (menu) {
+                menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const searchTerm = event.target.value;
+                window.location.href = '/products?search=' + encodeURIComponent(searchTerm);
+            }
+        }
+
+        function filterProducts() {
+            const category = document.getElementById('categoryFilter')?.value;
+            const search = document.getElementById('searchInput')?.value;
+            const sort = document.getElementById('sortFilter')?.value;
+            
+            let url = '/products?';
+            if (category && category !== 'all') url += 'category=' + category + '&';
+            if (search) url += 'search=' + encodeURIComponent(search) + '&';
+            if (sort) url += 'sort=' + sort + '&';
+            
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

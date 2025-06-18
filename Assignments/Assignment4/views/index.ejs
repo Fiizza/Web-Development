@@ -1,0 +1,122 @@
+<div id="HeroCont">
+    <div id="HeroSection">
+        <a href="Topman.html" target="_blank">
+            <img id="heroImage" src="https://content.asos-media.com/-/media/homepages/mw/2025/may/27-hp-gbl-excl-uk-us-ca-mx-breathe-max-hero/breathemax_hp_gbl_870x1110_flay-lay_00000.jpg" alt="">
+        </a>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="carousel-container">
+    <div class="carousel">
+        <div class="carousel-item"><a href="CoatsAndJackets.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tmlpcat1coats--jacketsdt565x980.jpg" alt="Coats & Jackets"></a></div>
+        <div class="carousel-item"><a href="Knitwear.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tm_lp_cat_2_knitwear_dt_565x980.jpg" alt="Knitwear"></a></div>
+        <div class="carousel-item"><a href="HoodiesAndSweats.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tmlpcat3hoodies--sweatsdt565x980.jpg" alt="Hoodies & Sweats"></a></div>
+        <div class="carousel-item"><a href="Trousers.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tm_lp_cat_4_trousers_dt_565x980.jpg" alt="Trousers"></a></div>
+        <div class="carousel-item"><a href="TShirts.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tm_lp_cat_5_t-shirts_dt_565x980.jpg" alt="T-Shirts"></a></div>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="HAcontainer">
+    <div class="HeroAdditionalSection">
+        <a href="TopManSummerKnits.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tm_lp_image_banner_1_dt_1440x780.jpg" alt="TopManSummerKnits"></a>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="NewIncontainer">
+    <div class="NewInSection">
+        <a href="TopManNewIn.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tm_lp_image_banner_2_dt_1440x680.jpg" alt="TopManNewIn"></a>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="TSKcontainer">
+    <div class="TSKSection">
+        <a href="TopManSummerKnits.html" target="_blank"><img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tstm-december-2023/tstm-dec-refresh/uk-au-row-us/topman/desktop/tm_lp_image_banner_3_dt_1440x680.jpg" alt="TSK"></a>
+    </div>
+</div>
+
+<div class="TopmanTagcontainer">
+    <div class="TopmanTagSection">
+        <a href="/" class="TopmanTagKHoverLink">
+            <img src="https://content.asos-media.com/-/media/hubs/topshop-topman/tm-september-25th-2023/01_desktop/09_logo_banner/tm_lp_logo_banner_dt_1440x322.jpg" alt="TopmanTag">
+        </a>
+    </div>
+</div>
+
+<!-- ✅ Featured Products Section -->
+<section style="padding: 60px 0; background-color: #fafafa;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h2 style="font-size: 36px; font-weight: bold; color: #333;">Featured Products</h2>
+            <p style="font-size: 18px; color: #666;">Discover our latest collection of premium men's fashion</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 40px;">
+            <% products.slice(0, 3).forEach(product => { %>
+                <div class="product-card" onclick="window.location.href='/products/<%= product._id %>'">
+                    <div style="position: relative; overflow: hidden; height: 300px;">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" style="width: 100%; height: 100%; object-fit: cover;">
+                        <% if (!product.inStock) { %>
+                            <div style="position: absolute; top: 15px; left: 15px; background: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px;">OUT OF STOCK</div>
+                        <% } else { %>
+                            <div style="position: absolute; top: 15px; left: 15px; background: #27ae60; color: white; padding: 5px 12px; border-radius: 20px;">IN STOCK</div>
+                        <% } %>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h3 style="font-size: 18px; font-weight: 600;"><%= product.name %></h3>
+                        <p style="color: #666; font-size: 14px;"><%= product.description %></p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 20px; font-weight: bold; color: #e74c3c;">$<%= product.price %></span>
+                            <button style="background: #333; color: white; padding: 8px 16px; border-radius: 6px;">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="/products" style="background: #333; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-size: 16px;">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Hover Styles -->
+<style>
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.product-card img {
+    transition: transform 0.3s ease;
+}
+.product-card:hover img {
+    transform: scale(1.05);
+}
+.product-card button:hover {
+    background: #525050;
+}
+</style>
+
+<!-- Hero Image Responsive Logic -->
+<script>
+const heroImg = document.getElementById("heroImage");
+if (window.devicePixelRatio > 1.5 || window.innerWidth > 1440) {
+  heroImg.src = "https://content.asos-media.com/-/media/homepages/mw/2025/may/27-hp-gbl-excl-uk-us-ca-mx-breathe-max-hero/breathemax_hp_gbl_870x1110_flay-lay_00000.jpg";
+}
+</script>
+

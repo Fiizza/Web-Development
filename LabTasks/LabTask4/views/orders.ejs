@@ -1,0 +1,22 @@
+
+<div class="container">
+  <h1>My Orders</h1>
+  <% if (orders.length === 0) { %>
+    <p>You have not placed any orders yet.</p>
+  <% } else { %>
+    <% orders.forEach(order => { %>
+      <div style="margin-bottom: 20px;">
+        <h3>Order ID: <%= order.id %></h3>
+        <p>Status: <%= order.status %></p>
+        <p>Placed On: <%= new Date(order.orderDate).toDateString() %></p>
+        <ul>
+          <% order.items.forEach(item => { %>
+            <li><%= item.name %> × <%= item.quantity %> = $<%= (item.price * item.quantity).toFixed(2) %></li>
+          <% }) %>
+        </ul>
+        <p><strong>Total: $<%= order.totalAmount.toFixed(2) %></strong></p>
+        <hr>
+      </div>
+    <% }) %>
+  <% } %>
+</div>

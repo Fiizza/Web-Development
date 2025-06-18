@@ -1,0 +1,127 @@
+<div style="padding: 40px 0; background: #fafafa; min-height: 80vh;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        
+        <!-- Page Header -->
+        <div style="margin-bottom: 40px;">
+            <h1 style="font-size: 32px; font-weight: bold; color: #333; margin-bottom: 10px; font-family: sans-serif;">
+                Men's Products
+            </h1>
+            <p style="color: #666; font-size: 16px;">
+                Showing <%= products.length %> products
+                <% if (currentCategory !== 'all') { %>
+                    in <strong><%= currentCategory.replace('-', ' ') %></strong>
+                <% } %>
+                <% if (currentSearch) { %>
+                    for "<strong><%= currentSearch %></strong>"
+                <% } %>
+            </p>
+        </div>
+
+        <!-- Filters and Search -->
+        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: end;">
+                
+                <!-- Category Filter -->
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 14px;">Category</label>
+                    <select onchange="filterProducts()" id="categoryFilter" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                        <% categories.forEach(cat => { %>
+                            <option value="<%= cat.id %>" <%= currentCategory === cat.id ? 'selected' : '' %>>
+                                <%= cat.name %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+
+                <!-- Search -->
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 14px;">Search</label>
+                    <input type="text" id="searchInput" value="<%= currentSearch %>" placeholder="Search products..." 
+                           style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;"
+                           onkeypress="if(event.key==='Enter') filterProducts()">
+                </div>
+
+                <!-- Sort -->
+                <div>
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 14px;">Sort by</label>
+                    <select onchange="filterProducts()" id="sortFilter" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                        <option value="" <%= currentSort === '' ? 'selected' : '' %>>Default</option>
+                        <option value="price-low" <%= currentSort === 'price-low' ? 'selected' : '' %>>Price: Low to High</option>
+                        <option value="price-high" <%= currentSort === 'price-high' ? 'selected' : '' %>>Price: High to Low</option>
+                        <option value="name" <%= currentSort === 'name' ? 'selected' : '' %>>Name A-Z</option>
+                        <option value="newest" <%= currentSort === 'newest' ? 'selected' : '' %>>Newest First</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <% if (products.length > 0) { %>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px;">
+                <% products.forEach(product => { %>
+                    <div class="product-card" style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+                         onclick="window.location.href='/products/<%= product.id %>'">
+                        
+                        <div style="position: relative; overflow: hidden; height: 280px;">
+                            <img src="<%= product.image %>" 
+                                 alt="<%= product.name %>" 
+                                 style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            
+                            <% if (!product.inStock) { %>
+                                <div style="position: absolute; top: 15px; left: 15px; background: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">
+                                    OUT OF STOCK
+                                </div>
+                            <% } %>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <h3 style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 8px; font-family: sans-serif;">
+                                <%= product.name %>
+                            </h3>
+                            <p style="color: #666; font-size: 14px; line-height: 1.4; margin-bottom: 15px;">
+                                <%= product.description %>
+                            </p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 18px; font-weight: bold; color: #e74c3c;">
+                                    $<%= product.price %>
+                                </span>
+                                <% if (product.inStock) { %>
+                                    <button style="background: #333; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: background 0.3s ease;">
+                                        Add to Cart
+                                    </button>
+                                <% } else { %>
+                                    <button disabled style="background: #ccc; color: #888; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; cursor: not-allowed;">
+                                        Out of Stock
+                                    </button>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 12px;">
+                <h3 style="color: #666; font-size: 20px; margin-bottom: 15px;">No products found</h3>
+                <p style="color: #888; margin-bottom: 20px;">Try adjusting your search or filter criteria</p>
+                <a href="/products" style="display: inline-block; background: #333; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">
+                    View All Products
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<style>
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+.product-card button:not(:disabled):hover {
+    background: #525050 !important;
+}
+</style>

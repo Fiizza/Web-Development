@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name": "FIZZA",
+    "email": "fizzaakram43@gmail.com",
+    "password": "$2b$10$aw2AIO5wOjCrUJLlEPEIZusm.YeTWS62E0uQV./HhIvvXFSXdOqlG",
+    "createdAt": "2025-06-14T23:16:37.085Z",
+    "loginCount": 20,
+    "lastLogin": "2025-06-16T19:20:59.847Z"
+  }
+]

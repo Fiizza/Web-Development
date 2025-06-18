@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASOS Checkout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .checkout-title {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .secure-badge img {
+            height: 30px;
+        }
+        
+        .checkout-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        
+        .checkout-form {
+            flex: 2;
+        }
+        
+        .order-summary {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .form-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #2d2d2d;
+        }
+        
+        .form-input.error {
+            border-color: #e74c3c;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .card-inputs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .card-inputs .form-input {
+            flex: 1;
+        }
+        
+        .cvv-input {
+            max-width: 100px;
+        }
+        
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #a3e0c9;
+            color: #333;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-transform: uppercase;
+            margin: 20px 0;
+        }
+        
+        .button:hover {
+            background-color: #8ad0b9;
+        }
+        
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .product-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .product-image {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .product-details h4 {
+            margin-bottom: 5px;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .product-variant, .product-qty {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .terms-text {
+            font-size: 12px;
+            color: #666;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+        
+        .terms-text a {
+            color: #666;
+            text-decoration: underline;
+        }
+
+        .promo-toggle {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo-content {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .promo-toggle-icon {
+            font-size: 20px;
+        }
+
+        .delivery-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .delivery-radio {
+            margin-right: 10px;
+        }
+
+        .optional-label {
+            color: #999;
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .order-details {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .order-details strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .track-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .track-link:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ASOS</div>
+            <div class="checkout-title">CHECKOUT</div>
+            <div class="secure-badge">
+                <img src="https://seal.digicert.com/seals/cascade/?tag=mrb4t…referer=secure.asos.com&format=png&lang=en&an=min" alt="Digicert Secured">
+            </div>
+        </header>
+        
+        <div class="success-message" id="successMessage">
+            <h3>Order Placed Successfully! 🎉</h3>
+            <p>Thank you for your purchase. Your order has been confirmed.</p>
+            <div class="order-details" id="orderDetails">
+                <strong>Order ID: <span id="orderIdDisplay"></span></strong>
+                <strong>Tracking Number: <span id="trackingDisplay"></span></strong>
+                <p>You can track your order using the tracking number above.</p>
+                <a href="/track-order" class="track-link">Track Your Order</a>
+            </div>
+        </div>
+
+        <div class="loading" id="loadingMessage">
+            <div class="spinner"></div>
+            <p>Processing your order...</p>
+        </div>
+        
+        <div class="checkout-content" id="checkoutContent">
+            <div class="checkout-form">
+                <div class="form-section">
+                    <div class="promo-toggle">
+                        <div class="section-title">PROMO/STUDENT CODE OR VOUCHERS</div>
+                        <span class="promo-toggle-icon">▼</span>
+                    </div>
+                    <div class="promo-content">
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="Enter promo code">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title">DELIVERY ADDRESS</div>
+                    <form id="checkoutForm">
+                        <div class="form-row">
+                            <label class="form-label">FULL NAME*</label>
+                            <input type="text" class="form-input" id="fullName" required>
+                            <span class="error-message" id="fullNameError">Please enter a valid name</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">EMAIL ADDRESS*</label>
+                            <input type="email" class="form-input" id="email" required>
+                            <span class="error-message" id="emailError">Please enter a valid email address</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">PHONE NUMBER*</label>
+                            <input type="tel" class="form-input" id="phone" required>
+                            <span class="error-message" id="phoneError">Please enter a valid phone number</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">ADDRESS LINE 1*</label>
+                            <input type="text" class="form-input" id="address1" required>
+                            <span class="error-message" id="address1Error">Address is required</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">ADDRESS LINE 2</label>
+                            <input type="text" class="form-input" id="address2">
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">CITY*</label>
+                            <input type="text" class="form-input" id="city" required>
+                            <span class="error-message" id="cityError">City is required</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">COUNTY/STATE <span class="optional-label">(Optional)</span></label>
+                            <input type="text" class="form-input" id="county">
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">POSTCODE/ZIP*</label>
+                            <input type="text" class="form-input" id="postcode" required>
+                            <span class="error-message" id="postcodeError">Postcode/ZIP is required</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">COUNTRY*</label>
+                            <input type="text" class="form-input" id="country" required value="Pakistan">
+                            <span class="error-message" id="countryError">Country is required</span>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title">PAYMENT DETAILS</div>
+                    <div class="form-row">
+                        <label class="form-label">CREDIT CARD NUMBER* (Enter any 16 digits for demo)</label>
+                        <input type="text" class="form-input" id="cardNumber" required maxlength="16" placeholder="1234567890123456">
+                        <span class="error-message" id="cardNumberError">Please enter a valid 16-digit card number</span>
+                    </div>
+                    
+                    <div class="card-inputs">
+                        <div class="form-row">
+                            <label class="form-label">EXPIRY DATE*</label>
+                            <input type="month" class="form-input" id="expiryDate" required>
+                            <span class="error-message" id="expiryDateError">Please enter a valid future date</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label class="form-label">CVV* (Enter any 3 digits)</label>
+                            <input type="text" class="form-input cvv-input" id="cvv" required maxlength="3" placeholder="123">
+                            <span class="error-message" id="cvvError">Please enter a valid 3-digit CVV</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="section-title">DELIVERY OPTIONS</div>
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" class="delivery-radio" id="standardDelivery" value="standard" checked>
+                        <label for="standardDelivery">Standard Delivery (3-5 business days) - Free</label>
+                    </div>
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" class="delivery-radio" id="expressDelivery" value="express">
+                        <label for="expressDelivery">Express Delivery (1-2 business days) - $9.99</label>
+                    </div>
+                </div>
+                
+                <button class="button" id="buyNowBtn">BUY NOW</button>
+                
+                <div class="terms-text">
+                    By placing your order you agree to our <a href="#">Terms & Conditions</a>, <a href="#">privacy</a> and <a href="#">returns policies</a>. You also consent to some of your data being stored by ASOS, which may be used to make future shopping experiences better for you.
+                </div>
+            </div>
+            
+            <div class="order-summary">
+                <div class="section-title">
+                    <% if (typeof cartItems !== 'undefined' && cartItems.length > 0) { %>
+                        <%= cartItems.length %> ITEM<%= cartItems.length > 1 ? 'S' : '' %>
+                    <% } else { %>
+                        1 ITEM
+                    <% } %>
+                    <a href="#" style="float:right; font-size:14px; font-weight:normal;">Edit</a>
+                </div>
+                
+                <% if (typeof cartItems !== 'undefined' && cartItems.length > 0) { %>
+                    <% cartItems.forEach(function(item) { %>
+                        <div class="product-item">
+                            <img src="<%= item.image || 'https://images.asos-media.com/products/jack-jones-ron-skater-jean-in-washed-grey/206549668-1-washedgrey?$l$' %>" alt="<%= item.name %>" class="product-image">
+                            <div class="product-details">
+                                <div class="product-price">$<%= parseFloat(item.price || 0).toFixed(2) %></div>
+                                <h4><%= item.name %></h4>
+                                <div class="product-variant"><%= item.variant || 'Default' %></div>
+                                <div class="product-qty">Qty: <%= item.quantity || 1 %></div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="product-item">
+                        <img src="https://images.asos-media.com/products/jack-jones-ron-skater-jean-in-washed-grey/206549668-1-washedgrey?$l$" alt="Sample Product" class="product-image">
+                        <div class="product-details">
+                            <div class="product-price">$49.99</div>
+                            <h4>Jack & Jones Ron Skater Jean</h4>
+                            <div class="product-variant">Washed Grey - Size 32</div>
+                            <div class="product-qty">Qty: 1</div>
+                        </div>
+                    </div>
+                <% } %>
+                
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">$<%= parseFloat(totalPrice || 49.99).toFixed(2) %></span>
+                </div>
+                
+                <div class="total-row">
+                    <span>Delivery</span>
+                    <span id="deliveryFee">Free</span>
+                </div>
+                
+                <div class="total-row" style="margin-top:20px;">
+                    <span class="total-price">TOTAL TO PAY</span>
+                    <span class="total-price" id="totalPrice">$<%= parseFloat(totalPrice || 49.99).toFixed(2) %></span>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div>ASOS Help | <a href="/track-order">Track Your Order</a></div>
+        </footer>
+    </div>
+
+    <script>
+        // Set minimum date for expiry
+        const today = new Date();
+        const year = today.getFullYear();
+        let month = today.getMonth() + 1;
+        if (month < 10) month = '0' + month;
+        document.getElementById('expiryDate').min = `${year}-${month}`;
+
+        // Promo toggle
+        document.querySelector('.promo-toggle').addEventListener('click', function() {
+            const promoContent = document.querySelector('.promo-content');
+            const toggleIcon = document.querySelector('.promo-toggle-icon');
+            
+            if (promoContent.style.display === 'block') {
+                promoContent.style.display = 'none';
+                toggleIcon.textContent = '▼';
+            } else {
+                promoContent.style.display = 'block';
+                toggleIcon.textContent = '▲';
+            }
+        });
+
+        // Delivery option change handler
+        document.querySelectorAll('[name="delivery"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const subtotalElement = document.getElementById('subtotal');
+                const deliveryFeeElement = document.getElementById('deliveryFee');
+                const totalPriceElement = document.getElementById('totalPrice');
+                
+                const subtotal = parseFloat(subtotalElement.textContent.replace('$', ''));
+                let deliveryFee = 0;
+                
+                if (this.value === 'express') {
+                    deliveryFee = 9.99;
+                    deliveryFeeElement.textContent = '$9.99';
+                } else {
+                    deliveryFeeElement.textContent = 'Free';
+                }
+                
+                const total = subtotal + deliveryFee;
+                totalPriceElement.textContent = '$' + total.toFixed(2);
+            });
+        });
+
+        // Form elements
+        const form = document.getElementById('checkoutForm');
+        const buyNowBtn = document.getElementById('buyNowBtn');
+        const successMessage = document.getElementById('successMessage');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const checkoutContent = document.getElementById('checkoutContent');
+
+        // Input fields
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const address1 = document.getElementById('address1');
+        const city = document.getElementById('city');
+        const postcode = document.getElementById('postcode');
+        const country = document.getElementById('country');
+        const cardNumber = document.getElementById('cardNumber');
+        const expiryDate = document.getElementById('expiryDate');
+        const cvv = document.getElementById('cvv');
+
+        // Validation functions
+        function validateField(field, errorId, validator) {
+            const errorElement = document.getElementById(errorId);
+            const result = validator(field.value.trim());
+            
+            if (result.isValid) {
+                field.classList.remove('error');
+                errorElement.style.display = 'none';
+                return true;
+            } else {
+                field.classList.add('error');
+                errorElement.textContent = result.message;
+                errorElement.style.display = 'block';
+                return false;
+            }
+        }
+
+        function validateName(value) {
+            if (!value) return { isValid: false, message: 'Name is required' };
+            if (!/^[A-Za-z\s]+$/.test(value)) return { isValid: false, message: 'Only alphabets allowed' };
+            return { isValid: true };
+        }
+
+        function validateEmail(value) {
+            if (!value) return { isValid: false, message: 'Email is required' };
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return { isValid: false, message: 'Invalid email format' };
+            return { isValid: true };
+        }
+
+        function validatePhone(value) {
+            if (!value) return { isValid: false, message: 'Phone is required' };
+            if (!/^[0-9]{10,15}$/.test(value)) return { isValid: false, message: '10-15 digits only' };
+            return { isValid: true };
+        }
+
+        function validateRequired(value) {
+            return value ? { isValid: true } : { isValid: false, message: 'This field is required' };
+        }
+
+        function validateCard(value) {
+            if (!value) return { isValid: false, message: 'Card number is required' };
+            if (!/^[0-9]{16}$/.test(value)) return { isValid: false, message: '16 digits required' };
+            return { isValid: true };
+        }
+
+        function validateExpiry(value) {
+            if (!value) return { isValid: false, message: 'Expiry date is required' };
+            const selected = new Date(value);
+            const current = new Date();
+            selected.setDate(1);
+            current.setDate(1);
+            if (selected < current) return { isValid: false, message: 'Must be future date' };
+            return { isValid: true };
+        }
+
+        function validateCVV(value) {
+            if (!value) return { isValid: false, message: 'CVV is required' };
+            if (!/^[0-9]{3}$/.test(value)) return { isValid: false, message: '3 digits required' };
+            return { isValid: true };
+        }
+
+        // Add input restrictions
+        cardNumber.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 16);
+        });
+
+        cvv.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 3);
+        });
+
+        phone.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 15);
+        });
+
+        // Generate order ID and tracking number
+        function generateOrderId() {
+            return 'ASOS' + Date.now() + Math.floor(Math.random() * 1000);
+        }
+
+        function generateTrackingNumber() {
+            return 'TRK' + Date.now() + Math.floor(Math.random() * 10000);
+        }
+
+        // Buy now button handler
+        buyNowBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+
+            // Validate all fields
+            const validations = [
+                validateField(fullName, 'fullNameError', validateName),
+                validateField(email, 'emailError', validateEmail),
+                validateField(phone, 'phoneError', validatePhone),
+                validateField(address1, 'address1Error', validateRequired),
+                validateField(city, 'cityError', validateRequired),
+                validateField(postcode, 'postcodeError', validateRequired),
+                validateField(country, 'countryError', validateRequired),
+                validateField(cardNumber, 'cardNumberError', validateCard),
+                validateField(expiryDate, 'expiryDateError', validateExpiry),
+                validateField(cvv, 'cvvError', validateCVV)
+            ];
+
+            const isFormValid = validations.every(v => v === true);
+
+            if (isFormValid) {
+                // Show loading
+                checkoutContent.style.display = 'none';
+                loadingMessage.style.display = 'block';
+
+                // Get delivery type
+                const deliveryType = document.querySelector('[name="delivery"]:checked').value;
+                const totalPrice = document.getElementById('totalPrice').textContent;
+
+                // Prepare order data
+                const orderData = {
+                    customerInfo: {
+                        fullName: fullName.value.trim(),
+                        email: email.value.trim(),
+                        phone: phone.value.trim(),
+                        address: {
+                            line1: address1.value.trim(),
+                            line2: document.getElementById('address2').value.trim(),
+                            city: city.value.trim(),
+                            county: document.getElementById('county').value.trim(),
+                            postcode: postcode.value.trim(),
+                            country: country.value.trim()
+                        }
+                    },
+                    payment: {
+                        cardLastFour: cardNumber.value.slice(-4),
+                        amount: parseFloat(totalPrice.replace('$', ''))
+                    },
+                    delivery: {
+                        type: deliveryType
+                    }
+                };
+
+                try {
+                    // Simulate API call delay
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+
+                    // In a real app, you would send this to your backend:
+                    // const response = await fetch('/api/place-order', {
+                    //     method: 'POST',
+                    //     headers: { 'Content-Type': 'application/json' },
+                    //     body: JSON.stringify(orderData)
+                    // });
+
+                    // Generate order details
+                    const orderId = generateOrderId();
+                    const trackingNumber = generateTrackingNumber();
+
+                    // Store in localStorage for demo (in real app, this would be in database)
+                    const orderDetails = {
+                        orderId,
+                        trackingNumber,
+                        ...orderData,
+                        orderDate: new Date().toISOString(),
+                        status: 'processing'
+                    };
+                    
+                    localStorage.setItem(`order_${orderId}`, JSON.stringify(orderDetails));
+                    localStorage.setItem(`tracking_${trackingNumber}`, JSON.stringify(orderDetails));
+
+                    // Hide loading and show success
+                    loadingMessage.style.display = 'none';
+                    document.getElementById('orderIdDisplay').textContent = orderId;
+                    document.getElementById('trackingDisplay').textContent = trackingNumber;
+                    successMessage.style.display = 'block';
+                    
+                    // Reset form
+                    form.reset();
+                    cardNumber.value = '';
+                    expiryDate.value = '';
+                    cvv.value = '';
+                    country.value = 'Pakistan';
+
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+
+                } catch (error) {
+                    // Hide loading and show form again
+                    loadingMessage.style.display = 'none';
+                    checkoutContent.style.display = 'flex';
+                    alert('Order placement failed. Please try again.');
+                }
+            } else {
+                // Focus on first invalid field
+                const firstInvalidField = document.querySelector('.form-input.error');
+                if (firstInvalidField) {
+                    firstInvalidField.focus();
+                }
+            }
+        });
+
+        // Auto-hide success message after 10 seconds
+        setTimeout(() => {
+            if (successMessage.style.display === 'block') {
+                successMessage.style.display = 'none';
+                checkoutContent.style.display = 'flex';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

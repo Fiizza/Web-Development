@@ -1,0 +1,205 @@
+<div id="TopSect">
+    <p> Help & FAQs</p>
+    <img id="PFlag" src="https://assets.asosservices.com/storesa/images/flags/pk.png" alt="">
+</div>
+<div id="NaviBar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background-color: #000; position: relative;">
+    <div style="display: flex; align-items: center; gap: 30px;">
+        <a href="/" style="text-decoration: none;">
+            <img class="logo" src="https://1000logos.net/wp-content/uploads/2020/07/Asos-Logo.jpg" style="height: 40px; width: auto;">
+        </a>
+        <a href="women.html" style="text-decoration: none;">
+            <p id="women" style="color: white; margin: 0; padding: 0; font-weight: 500; font-size: 14px; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='white'">WOMEN</p>
+        </a>
+        <a href="" style="text-decoration: none;">
+            <p id="men" style="color: white; margin: 0; padding: 0; font-weight: 500; font-size: 14px; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='white'">MEN</p>
+        </a>
+    </div>
+    
+    <div style="flex: 1; max-width: 600px; margin: 0 30px;">
+        <input type="search" placeholder="Search for items and brands" id="searchbar" style="width:600px; padding: 8px 15px; border: none; border-radius: 20px; background-color: #f4ececf2; color: rgba(255, 255, 255, 0.246); font-size: 14px; cursor: pointer;" placeholder="Search for items and brands">
+    </div>
+
+    <div class="user-section" style="display: flex; align-items: center; gap: 15px;">
+        <% if (isAuthenticated) { %>
+            <div class="user-info" style="position: relative;">
+                <div class="user-dropdown" style="position: relative;">
+                    <img id="loginimg" src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M14 6a4 4 0 10-8 0 4 4 0 008 0zm2 0A6 6 0 114 6a6 6 0 0112 0zm-6 9c-3.068 0-5.67 1.223-7.035 3h14.07c-1.365-1.777-3.967-3-7.035-3zm10 5H0c.553-4.006 4.819-7 10-7s9.447 2.994 10 7z' fill='%23fff'/%3E%3C/svg%3E" alt="user menu" style="cursor: pointer; height: 20px; width: 20px;" title="<%= user.name %>">
+                    <div class="dropdown-content" style="display:none; position: absolute; top: 35px; right: 0; background-color: white; min-width: 200px; border: 1px solid #ccc; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); z-index:1002; text-align: left; padding: 10px; border-radius: 8px;">
+                        <div style="padding: 8px; border-bottom: 1px solid #eee; margin-bottom: 8px;">
+                            <strong style="color: #333;">Welcome, <%= user.name %>!</strong>
+                            <div style="font-size: 12px; color: #666; margin-top: 2px;"><%= user.email %></div>
+                        </div>
+                        <a href="/profile" style="display: block; padding: 8px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'"> My Profile</a>
+                        <a href="/orders" style="display: block; padding: 8px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'"> My Orders</a>
+                        <a href="/wishlist" style="display: block; padding: 8px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'"> Wishlist</a>
+                        <!-- ADMIN PANEL OPTION ADDED HERE -->
+                        <hr style="margin: 8px 0; border: none; border-top: 1px solid #eee;">
+                        <a href="#" id="adminPanelLink" style="display: block; padding: 8px; text-decoration: none; color: #0066cc; border-radius: 4px; transition: background-color 0.2s; font-weight: 500;" onmouseover="this.style.backgroundColor='#f0f8ff'" onmouseout="this.style.backgroundColor='transparent'">⚙️ Admin Panel</a>
+                        <hr style="margin: 8px 0; border: none; border-top: 1px solid #eee;">
+                        <form action="/auth/logout" method="POST" style="margin: 0;">
+                            <button type="submit" style="width: 100%; padding: 8px; border: none; background: none; text-align: left; cursor: pointer; border-radius: 4px;background-color:white;" onmouseover="this.style.backgroundColor='#ffe6e6'" onmouseout="this.style.backgroundColor='transparent'">🚪 Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="user-dropdown" style="position: relative;">
+                <img id="loginimg" src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M14 6a4 4 0 10-8 0 4 4 0 008 0zm2 0A6 6 0 114 6a6 6 0 0112 0zm-6 9c-3.068 0-5.67 1.223-7.035 3h14.07c-1.365-1.777-3.967-3-7.035-3zm10 5H0c.553-4.006 4.819-7 10-7s9.447 2.994 10 7z' fill='%23fff'/%3E%3C/svg%3E" alt="login" style="cursor: pointer; height: 20px; width: 20px;" title="Account">
+                <div class="dropdown-content" style="display:none; position: absolute; top: 35px; right: 0; background-color: white; min-width: 150px; border: 1px solid #ccc; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); z-index:1002; text-align: left; padding: 5px; border-radius: 8px;">
+                    <a href="/auth/login" style="display: block; padding: 8px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">🔑 Login</a>
+                    <a href="/auth/register" style="display: block; padding: 8px; text-decoration: none; color: black; border-radius: 4px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f5f5f5'" onmouseout="this.style.backgroundColor='transparent'">📝 Register</a>
+                </div>
+            </div>
+        <% } %>
+
+        <a href="/cart" style="text-decoration: none;">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 18' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M10.618 15.474a21.327 21.327 0 003.137-2.076c2.697-2.166 4.249-4.619 4.245-7.299-.003-2.284-1.757-4.101-3.881-4.099-1.016 0-1.97.417-2.69 1.158l-1.43 1.467-1.432-1.463a3.748 3.748 0 00-2.695-1.151C3.749 2.013 1.998 3.837 2 6.12c.003 2.677 1.559 5.123 4.256 7.281a21.32 21.32 0 003.756 2.39c.191-.096.394-.202.606-.318zM9.996 1.763l.203-.2A5.726 5.726 0 0114.116 0c3.246-.004 5.88 2.725 5.884 6.097C20.01 13.845 10.014 18 10.014 18S.01 13.87 0 6.124C-.003 2.752 2.624.014 5.87.01a5.733 5.733 0 013.92 1.554l.205.199z' fill='%23FFF'/%3E%3C/svg%3E" alt="cart" id="cartimg" title="Shopping Cart" style="height: 20px; width: 20px; cursor: pointer;">
+        </a>
+
+        <a href="/wishlist" style="text-decoration: none;">
+            <img id="wishlist" src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M18 17.987V7H2v11l16-.013zM4.077 5A5.996 5.996 0 0110 0c2.973 0 5.562 2.162 6.038 5H20v14.986L0 20V5h4.077zm9.902-.005C13.531 3.275 11.86 2 10 2 8.153 2 6.604 3.294 6.144 4.995c.92 0 7.654.03 7.835 0z' fill='%23FFF'/%3E%3C/svg%3E" alt="wishlist" title="Wishlist" style="height: 20px; width: 20px; cursor: pointer;">
+        </a>
+    </div>
+</div>
+
+<div id="ProductSection">
+    <p>New in</p>
+    <p>Clothing</p>
+    <p>Trending</p>
+    <p>Shoes</p>
+    <p>Accessories</p>
+    <p>Brands</p>
+    <p>Activewear</p>
+    <p>Tailoring</p>
+    <p>Grooming</p>
+    <p>Topman</p>
+</div>
+
+<div id="OffersSection">
+    <div id="BigOffer">
+        <div id="Offer1">
+            UPTO 70% OFF 1000s OF STYLES
+            <br>
+            Plus, an extra 15% off*
+            <br>
+            With code: SUNSET
+            <div class="offer-menu">
+                *Enter code SUNSET at checkout to receive discount on selected styles included in the ASOS promotion. Ends 9am UTC on 11 March 2025. Code can be used multiple times per customer up to a maximum pre-discount spend of £500/€690/$789.55 per order. Can't be used with other promo codes or on gift vouchers, delivery charges, Premier Delivery or ASOS Marketplace. Country exclusions apply. Selected marked products excluded from promo.
+            </div>
+        </div>
+    </div>
+    <a href="https://example.com" target="_blank" id="Offer2">
+        FREE WORLDWIDE DELIVERY
+    </a>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 30px; border-radius: 10px; width: 400px; max-width: 90%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <h2 style="margin-bottom: 20px; color: #333;">Admin Access Required</h2>
+        <form id="adminLoginForm">
+            <div style="margin-bottom: 15px; text-align: left;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Email:</label>
+                <input type="email" id="adminEmail" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+            </div>
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #555;">Password:</label>
+                <input type="password" id="adminPassword" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">Access Admin Panel</button>
+                <button type="button" id="closeModal" style="padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">Cancel</button>
+            </div>
+        </form>
+        <div id="adminError" style="color: red; margin-top: 10px; display: none;"></div>
+        <div style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; font-size: 12px; color: #666;">
+            <strong>Default Admin Credentials:</strong><br>
+            Email: admin@asos.com<br>
+            Password: admin123
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const icon = document.getElementById('loginimg');
+        const dropdown = document.querySelector('.dropdown-content');
+        const adminPanelLink = document.getElementById('adminPanelLink');
+        const adminModal = document.getElementById('adminModal');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const closeModal = document.getElementById('closeModal');
+        const adminError = document.getElementById('adminError');
+
+        // Dropdown toggle
+        if (icon && dropdown) {
+            icon.addEventListener('click', () => {
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!icon.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+
+        // Open admin modal
+        if (adminPanelLink) {
+            adminPanelLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                adminModal.style.display = 'flex';
+                dropdown.style.display = 'none';
+            });
+        }
+
+        // Close modal
+        if (closeModal) {
+            closeModal.addEventListener('click', () => {
+                adminModal.style.display = 'none';
+                adminError.style.display = 'none';
+                adminLoginForm.reset();
+            });
+        }
+
+        // Close modal on background click
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+                adminError.style.display = 'none';
+                adminLoginForm.reset();
+            }
+        });
+
+        // Admin login form submission using backend route
+        if (adminLoginForm) {
+            adminLoginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('adminEmail').value;
+                const password = document.getElementById('adminPassword').value;
+
+                try {
+                    const response = await fetch('/admin/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Redirect to admin panel
+                        window.location.href = data.redirect || '/admin';
+                    } else {
+                        adminError.textContent = data.error || 'Invalid admin credentials.';
+                        adminError.style.display = 'block';
+                    }
+                } catch (err) {
+                    adminError.textContent = 'Server error. Please try again.';
+                    adminError.style.display = 'block';
+                }
+            });
+        }
+    });
+</script>
