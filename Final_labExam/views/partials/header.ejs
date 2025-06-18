@@ -1,0 +1,586 @@
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+}
+
+#TopSect {
+    background-color: #000000;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #ffffff;
+    border-bottom: 1px solid #333333;
+}
+
+#PFlag {
+    height: 16px;
+    width: auto;
+}
+
+.dropdown-content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown-content.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #000000;
+    border-radius: 0;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+    transform: translateX(2px);
+}
+
+.dropdown-item.admin-item {
+    color: #000000;
+    font-weight: 500;
+}
+
+.dropdown-item.admin-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.logout-item {
+    color: #000000;
+}
+
+.dropdown-item.logout-item:hover {
+    background-color: #f5f5f5;
+}
+
+.user-welcome {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 8px;
+    background: #000000;
+    color: white;
+    border-radius: 0;
+}
+
+.user-welcome strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.user-welcome .email {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #e5e5e5;
+    margin: 8px 0;
+}
+
+.search-container {
+    position: relative;
+}
+
+#searchbar {
+    width: 600px;
+    padding: 12px 20px;
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: text;
+}
+
+#searchbar:focus {
+    outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px #000000;
+    color: #000000;
+    border-color: #000000;
+}
+
+#searchbar::placeholder {
+    color: #666666;
+}
+
+.nav-link {
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ffffff;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.icon-button {
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.icon-button:hover {
+    transform: scale(1.05);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #000000;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 0;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: 1px solid #e5e5e5;
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+    color: #000000;
+    font-weight: 400;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background-color: #000000;
+    color: white;
+    border: 1px solid #000000;
+}
+
+.btn-primary:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #e5e5e5;
+}
+
+.btn-secondary:hover {
+    background-color: #f5f5f5;
+}
+
+.error-message {
+    color: #000000;
+    margin-top: 10px;
+    display: none;
+    font-size: 12px;
+}
+
+.admin-info {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 0;
+    font-size: 12px;
+    color: #666666;
+    border: 1px solid #e5e5e5;
+}
+</style>
+
+<div id="TopSect">
+    <p>Help & FAQs</p>
+    <img id="PFlag" src="https://assets.asosservices.com/storesa/images/flags/pk.png" alt="Pakistan Flag">
+</div>
+
+<div id="NaviBar" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background-color: #000; position: relative;">
+    <div style="display: flex; align-items: center; gap: 30px;">
+        <a href="/" style="text-decoration: none;">
+            <img class="logo" src="https://1000logos.net/wp-content/uploads/2020/07/Asos-Logo.jpg" style="height: 40px; width: auto;">
+        </a>
+        <a href="/women" style="text-decoration: none;" class="nav-link">
+            <p style="color: white; margin: 0; padding: 8px 0; font-weight: 500; font-size: 14px; cursor: pointer; transition: color 0.3s;">WOMEN</p>
+        </a>
+        <a href="/men" style="text-decoration: none;" class="nav-link">
+            <p style="color: white; margin: 0; padding: 8px 0; font-weight: 500; font-size: 14px; cursor: pointer; transition: color 0.3s;">MEN</p>
+        </a>
+    </div>
+    
+    <div class="search-container" style="flex: 1; max-width: 600px; margin: 0 30px;">
+        <input type="search" placeholder="Search for items and brands" id="searchbar">
+    </div>
+
+    <div class="user-section" style="display: flex; align-items: center; gap: 15px;">
+        <% if (isAuthenticated) { %>
+            <!-- Authenticated User Dropdown -->
+            <div class="user-info" style="position: relative;">
+                <div class="user-dropdown" style="position: relative;">
+                    <div class="icon-button">
+                        <img id="loginimg" src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M14 6a4 4 0 10-8 0 4 4 0 008 0zm2 0A6 6 0 114 6a6 6 0 0112 0zm-6 9c-3.068 0-5.67 1.223-7.035 3h14.07c-1.365-1.777-3.967-3-7.035-3zm10 5H0c.553-4.006 4.819-7 10-7s9.447 2.994 10 7z' fill='%23fff'/%3E%3C/svg%3E" alt="user menu" style="cursor: pointer; height: 20px; width: 20px;" title="<%= user.name %>">
+                        <div class="notification-badge">3</div>
+                    </div>
+                    
+                    <div class="dropdown-content" style="position: absolute; top: 35px; right: 0; background-color: white; min-width: 250px; border: 1px solid #e0e0e0; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); z-index: 1002; border-radius: 12px; overflow: hidden;">
+                        <div class="user-welcome">
+                            <strong>Welcome, <%= user.name %>!</strong>
+                            <div class="email"><%= user.email %></div>
+                        </div>
+
+                        <div style="padding: 8px;">
+                            <a href="/profile" class="dropdown-item">
+                                <span></span> My Profile
+                            </a>
+                            <a href="/orders" class="dropdown-item">
+                                <span></span> My Orders
+                            </a>
+                            <a href="/wishlist" class="dropdown-item">
+                                <span></span> Wishlist
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a href="/contact" class="dropdown-item">
+                                <span></span> Contact / Support
+                            </a>
+                            <a href="/my-complaints" class="dropdown-item">
+                                <span></span> My Complaints
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a href="#" class="dropdown-item admin-item" id="adminPanelLink">
+                                <span></span> Admin Panel
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <form action="/auth/logout" method="POST" style="margin: 0;">
+                                <button type="submit" class="dropdown-item logout-item" style="width: 100%; background: none; border: none; text-align: left; cursor: pointer;">
+                                    <span></span> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <!-- Non-authenticated User Dropdown -->
+            <div class="user-dropdown" style="position: relative;">
+                <div class="icon-button">
+                    <img id="loginimg" src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M14 6a4 4 0 10-8 0 4 4 0 008 0zm2 0A6 6 0 114 6a6 6 0 0112 0zm-6 9c-3.068 0-5.67 1.223-7.035 3h14.07c-1.365-1.777-3.967-3-7.035-3zm10 5H0c.553-4.006 4.819-7 10-7s9.447 2.994 10 7z' fill='%23fff'/%3E%3C/svg%3E" alt="login" style="cursor: pointer; height: 20px; width: 20px;" title="Account">
+                </div>
+                <div class="dropdown-content" style="position: absolute; top: 35px; right: 0; background-color: white; min-width: 180px; border: 1px solid #e0e0e0; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); z-index: 1002; border-radius: 12px; overflow: hidden; padding: 8px;">
+                    <a href="/auth/login" class="dropdown-item">
+                        <span>🔑</span> Login
+                    </a>
+                    <a href="/auth/register" class="dropdown-item">
+                        <span>📝</span> Register
+                    </a>
+                </div>
+            </div>
+        <% } %>
+
+        <a href="/cart" style="text-decoration: none;" class="icon-button">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 18' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M10.618 15.474a21.327 21.327 0 003.137-2.076c2.697-2.166 4.249-4.619 4.245-7.299-.003-2.284-1.757-4.101-3.881-4.099-1.016 0-1.97.417-2.69 1.158l-1.43 1.467-1.432-1.463a3.748 3.748 0 00-2.695-1.151C3.749 2.013 1.998 3.837 2 6.12c.003 2.677 1.559 5.123 4.256 7.281a21.32 21.32 0 003.756 2.39c.191-.096.394-.202.606-.318zM9.996 1.763l.203-.2A5.726 5.726 0 0114.116 0c3.246-.004 5.88 2.725 5.884 6.097C20.01 13.845 10.014 18 10.014 18S.01 13.87 0 6.124C-.003 2.752 2.624.014 5.87.01a5.733 5.733 0 013.92 1.554l.205.199z' fill='%23FFF'/%3E%3C/svg%3E" alt="cart" title="Shopping Cart" style="height: 20px; width: 20px; cursor: pointer;">
+            <div class="notification-badge">2</div>
+        </a>
+
+        <a href="/wishlist" style="text-decoration: none;" class="icon-button">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Cpath d='M18 17.987V7H2v11l16-.013zM4.077 5A5.996 5.996 0 0110 0c2.973 0 5.562 2.162 6.038 5H20v14.986L0 20V5h4.077zm9.902-.005C13.531 3.275 11.86 2 10 2 8.153 2 6.604 3.294 6.144 4.995c.92 0 7.654.03 7.835 0z' fill='%23FFF'/%3E%3C/svg%3E" alt="wishlist" title="Wishlist" style="height: 20px; width: 20px; cursor: pointer;">
+            <div class="notification-badge">5</div>
+        </a>
+    </div>
+</div>
+
+<div id="ProductSection">
+    <p>New in</p>
+    <p>Clothing</p>
+    <p>Trending</p>
+    <p>Shoes</p>
+    <p>Accessories</p>
+    <p>Brands</p>
+    <p>Activewear</p>
+    <p>Tailoring</p>
+    <p>Grooming</p>
+    <p>Topman</p>
+</div>
+
+<div id="OffersSection">
+    <div id="BigOffer">
+        <div id="Offer1">
+            UPTO 70% OFF 1000s OF STYLES
+            <br>
+            Plus, an extra 15% off*
+            <br>
+            With code: SUNSET
+            <div class="offer-menu">
+                *Enter code SUNSET at checkout to receive discount on selected styles included in the ASOS promotion. Ends 9am UTC on 11 March 2025. Code can be used multiple times per customer up to a maximum pre-discount spend of £500/€690/$789.55 per order. Can't be used with other promo codes or on gift vouchers, delivery charges, Premier Delivery or ASOS Marketplace. Country exclusions apply. Selected marked products excluded from promo.
+            </div>
+        </div>
+    </div>
+    <a href="https://example.com" target="_blank" id="Offer2">
+        FREE WORLDWIDE DELIVERY
+    </a>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminModal" class="modal">
+    <div class="modal-content">
+        <h2>Admin Access Required</h2>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="adminEmail">Email:</label>
+                <input type="email" id="adminEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Password:</label>
+                <input type="password" id="adminPassword" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Access Admin Panel</button>
+                <button type="button" id="closeModal" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+        <div id="adminError" class="error-message"></div>
+        <div class="admin-info">
+            <strong>Default Admin Credentials:</strong><br>
+            Email: admin@asos.com<br>
+            Password: admin123
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Enhanced dropdown functionality
+        const userDropdowns = document.querySelectorAll('.user-dropdown');
+        const dropdownContents = document.querySelectorAll('.dropdown-content');
+        const adminPanelLink = document.getElementById('adminPanelLink');
+        const adminModal = document.getElementById('adminModal');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const closeModal = document.getElementById('closeModal');
+        const adminError = document.getElementById('adminError');
+
+        // Toggle dropdown on click
+        userDropdowns.forEach((dropdown, index) => {
+            const icon = dropdown.querySelector('#loginimg');
+            const content = dropdown.querySelector('.dropdown-content');
+            
+            if (icon && content) {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Close all other dropdowns
+                    dropdownContents.forEach((otherContent, otherIndex) => {
+                        if (otherIndex !== index) {
+                            otherContent.classList.remove('show');
+                        }
+                    });
+                    // Toggle current dropdown
+                    content.classList.toggle('show');
+                });
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            dropdownContents.forEach(content => {
+                content.classList.remove('show');
+            });
+        });
+
+        // Prevent dropdown from closing when clicking inside
+        dropdownContents.forEach(content => {
+            content.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+
+        // Admin panel functionality
+        if (adminPanelLink) {
+            adminPanelLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                adminModal.style.display = 'flex';
+                dropdownContents.forEach(content => {
+                    content.classList.remove('show');
+                });
+            });
+        }
+
+        // Close modal functionality
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                adminModal.style.display = 'none';
+                adminError.style.display = 'none';
+                adminLoginForm.reset();
+            });
+        }
+
+        // Close modal when clicking outside
+        if (adminModal) {
+            adminModal.addEventListener('click', function(e) {
+                if (e.target === adminModal) {
+                    adminModal.style.display = 'none';
+                    adminError.style.display = 'none';
+                    adminLoginForm.reset();
+                }
+            });
+        }
+
+        // Admin login form submission
+        if (adminLoginForm) {
+            adminLoginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('adminEmail').value;
+                const password = document.getElementById('adminPassword').value;
+
+                // Hardcoded admin credentials for demo
+                if (email === 'admin@asos.com' && password === 'admin123') {
+                    // In a real application, you would validate with the server
+                    window.location.href = '/admin';
+                } else {
+                    adminError.textContent = 'Invalid admin credentials. Please try again.';
+                    adminError.style.display = 'block';
+                }
+            });
+        }
+
+        // Add smooth animations for hover effects on dropdown items
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                if (!this.style.transform) {
+                    this.style.transform = 'translateX(4px)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Search functionality
+        const searchbar = document.getElementById('searchbar');
+        if (searchbar) {
+            searchbar.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+        }
+
+        // Icon button hover effects
+        const iconButtons = document.querySelectorAll('.icon-button');
+        iconButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>

@@ -1,0 +1,112 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "FIZZA",
+      "email": "fizzaakram43@gmail.com",
+      "password": "$2b$10$aw2AIO5wOjCrUJLlEPEIZusm.YeTWS62E0uQV./HhIvvXFSXdOqlG",
+      "createdAt": "2025-06-14T23:16:37.085Z",
+      "updatedAt": "2025-06-16T19:20:59.847Z",
+      "loginCount": 20,
+      "lastLogin": "2025-06-16T19:20:59.847Z",
+      "isActive": true,
+      "role": "user",
+      "profile": {
+        "firstName": "Fizza",
+        "lastName": "Akram",
+        "avatar": null,
+        "phone": "+92-300-1234567",
+        "dateOfBirth": "1995-03-15",
+        "gender": "female"
+      },
+      "preferences": {
+        "theme": "light",
+        "language": "en",
+        "notifications": {
+          "email": true,
+          "sms": false,
+          "push": true
+        }
+      },
+      "address": {
+        "street": "123 Main Street",
+        "city": "Lahore",
+        "state": "Punjab",
+        "country": "Pakistan",
+        "postalCode": "54000"
+      }
+    },
+    {
+      "id": 2,
+      "name": "AHMED",
+      "email": "ahmed.hassan@example.com",
+      "password": "$2b$10$XyZ789ABCdef.GHIjklMNOpqrSTUvwxYZ123456789abcDEF",
+      "createdAt": "2025-06-10T10:30:00.000Z",
+      "updatedAt": "2025-06-18T08:15:30.123Z",
+      "loginCount": 45,
+      "lastLogin": "2025-06-18T08:15:30.123Z",
+      "isActive": true,
+      "role": "admin",
+      "profile": {
+        "firstName": "Ahmed",
+        "lastName": "Hassan",
+        "avatar": "https://example.com/avatars/ahmed.jpg",
+        "phone": "+92-321-9876543",
+        "dateOfBirth": "1988-12-22",
+        "gender": "male"
+      },
+      "preferences": {
+        "theme": "dark",
+        "language": "ur",
+        "notifications": {
+          "email": true,
+          "sms": true,
+          "push": true
+        }
+      },
+      "address": {
+        "street": "456 Garden Avenue",
+        "city": "Karachi",
+        "state": "Sindh",
+        "country": "Pakistan",
+        "postalCode": "75000"
+      }
+    },
+    {
+      "id": 3,
+      "name": "SARA",
+      "email": "sara.khan@example.com",
+      "password": "$2b$10$MnOpQrStUvWxYz012345.6789ABCdefGHIjklMNOpqrSTUvwxYZ",
+      "createdAt": "2025-05-28T14:22:18.456Z",
+      "updatedAt": "2025-06-17T16:45:22.789Z",
+      "loginCount": 12,
+      "lastLogin": "2025-06-17T16:45:22.789Z",
+      "isActive": false,
+      "role": "user",
+      "profile": {
+        "firstName": "Sara",
+        "lastName": "Khan",
+        "avatar": null,
+        "phone": "+92-333-5555666",
+        "dateOfBirth": "1992-07-08",
+        "gender": "female"
+      },
+      "preferences": {
+        "theme": "auto",
+        "language": "en",
+        "notifications": {
+          "email": false,
+          "sms": false,
+          "push": false
+        }
+      },
+      "address": {
+        "street": "789 University Road",
+        "city": "Islamabad",
+        "state": "ICT",
+        "country": "Pakistan",
+        "postalCode": "44000"
+      }
+    }
+  ]
+}

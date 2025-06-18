@@ -1,0 +1,17 @@
+<div class="container" style="max-width: 800px; margin: 40px auto;">
+  <h1>🛠️ All Complaints</h1>
+  <% if (complaints.length === 0) { %>
+    <p>No complaints submitted yet.</p>
+  <% } else { %>
+    <ul>
+      <% complaints.forEach(c => { %>
+        <li style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
+          <strong>User:</strong> <%= c.userId.name %> (<%= c.userId.email %>)<br>
+          <strong>Order ID:</strong> <%= c.orderId %><br>
+          <strong>Message:</strong> <%= c.message %><br>
+          <small>Submitted on <%= c.createdAt.toLocaleString() %></small>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>

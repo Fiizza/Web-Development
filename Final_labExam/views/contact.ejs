@@ -1,0 +1,15 @@
+<!-- views/contact.ejs -->
+<div class="container" style="max-width: 600px; margin: 40px auto;">
+  <h1>✉️ Submit a Complaint</h1>
+  <form action="/contact" method="POST">
+    <div>
+      <label for="orderId">Order ID:</label>
+      <input type="text" name="orderId" id="orderId" required style="width:100%; padding:8px; margin:8px 0;">
+    </div>
+    <div>
+      <label for="message">Complaint Message:</label>
+      <textarea name="message" id="message" rows="5" required style="width:100%; padding:8px; margin:8px 0;"></textarea>
+    </div>
+    <button type="submit" style="padding:10px 20px;">Submit Complaint</button>
+  </form>
+</div>

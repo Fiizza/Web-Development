@@ -1,0 +1,96 @@
+<div style="padding: 100px 0; background: #fafafa; min-height: 80vh; text-align: center;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 0 20px;">
+        
+        <!-- 404 Icon -->
+        <div style="margin-bottom: 40px;">
+            <div style="width: 120px; height: 120px; background: #f8f8f8; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 3px solid #e8e8e8;">
+                <svg style="width: 60px; height: 60px; color: #666;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- 404 Message -->
+        <h1 style="font-size: 72px; font-weight: bold; color: #333; margin-bottom: 20px; font-family: sans-serif;">
+            404
+        </h1>
+        
+        <h2 style="font-size: 32px; font-weight: 600; color: #333; margin-bottom: 20px; font-family: sans-serif;">
+            Page Not Found
+        </h2>
+        
+        <p style="color: #666; font-size: 18px; line-height: 1.6; margin-bottom: 40px;">
+            Sorry, the page you are looking for doesn't exist or has been moved. 
+            Let's get you back on track.
+        </p>
+
+        <!-- Action Buttons -->
+        <div style="margin-bottom: 40px;">
+            <a href="/" style="display: inline-block; background: #333; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; transition: background 0.3s ease; margin-right: 15px;">
+                Go Home
+            </a>
+            <a href="/products" style="display: inline-block; background: transparent; color: #333; border: 2px solid #333; padding: 13px 30px; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; transition: all 0.3s ease;">
+                Shop Products
+            </a>
+        </div>
+
+        <!-- Helpful Links -->
+        <div style="background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+            <h3 style="font-size: 20px; font-weight: 600; color: #333; margin-bottom: 20px; font-family: sans-serif;">
+                Looking for something specific?
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <a href="/products" style="display: block; padding: 15px; background: #f8f8f8; border-radius: 8px; text-decoration: none; color: #333; transition: background 0.3s ease;">
+                    <strong>Products</strong><br>
+                    <small style="color: #666;">Browse our collection</small>
+                </a>
+                
+                <a href="/about" style="display: block; padding: 15px; background: #f8f8f8; border-radius: 8px; text-decoration: none; color: #333; transition: background 0.3s ease;">
+                    <strong>About Us</strong><br>
+                    <small style="color: #666;">Learn more about us</small>
+                </a>
+                
+                <a href="/auth/login" style="display: block; padding: 15px; background: #f8f8f8; border-radius: 8px; text-decoration: none; color: #333; transition: background 0.3s ease;">
+                    <strong>Account</strong><br>
+                    <small style="color: #666;">Login or register</small>
+                </a>
+            </div>
+        </div>
+
+        <!-- Search Box -->
+        <div style="margin-top: 40px;">
+            <p style="color: #666; margin-bottom: 15px;">Or search for what you need:</p>
+            <div style="max-width: 400px; margin: 0 auto; position: relative;">
+                <input type="text" 
+                       placeholder="Search products..." 
+                       style="width: 100%; padding: 15px 50px 15px 20px; border: 2px solid #ddd; border-radius: 30px; font-size: 16px; box-sizing: border-box;"
+                       onkeypress="if(event.key==='Enter') window.location.href='/products?search=' + encodeURIComponent(event.target.value)">
+                <button onclick="const input = this.previousElementSibling; window.location.href='/products?search=' + encodeURIComponent(input.value)"
+                        style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: #333; color: white; border: none; padding: 10px 15px; border-radius: 25px; cursor: pointer;">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+a:hover {
+    background: #525050 !important;
+    color: white !important;
+}
+
+.helpful-link:hover {
+    background: #e8e8e8 !important;
+}
+
+button:hover {
+    background: #525050 !important;
+}
+
+input:focus {
+    outline: none;
+    border-color: #333;
+}
+</style>
